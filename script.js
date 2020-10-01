@@ -6,13 +6,10 @@ class Calculator {
     }
 
     checkKey(key) {
-        console.log('previousOperand = '+ this.previousOperand);
-        console.log('currentOperand = '+ this.currentOperand);
-        console.log('operation = '+ this.operation);
         if (key >= '0' && key <= '9') {
             this.appendNumber(key);
         }
-        else if (key == 'Enter'){
+        else if (key == 'Enter') {
             this.readyToInput = false;
             this.compute();
         }
@@ -22,8 +19,8 @@ class Calculator {
         else {
             return;
         }
-        this.updateDisplay();    
-    
+        this.updateDisplay();
+
     }
     clear() {
         this.previousOperand = '';
@@ -33,24 +30,25 @@ class Calculator {
     delete() {
         let tempStr = this.currentOperand.toString();
         if (tempStr.length == 0) return;
-           this.currentOperand = tempStr.slice(0,tempStr.length-1);
+        this.currentOperand = tempStr.slice(0, tempStr.length - 1);
     }
     appendNumber(number) {
-        if (this.readyToInput == false){
+        if (this.readyToInput == false) {
             this.clear();
             this.readyToInput = true;
         }
         if (number === '.' && this.currentOperand.includes('.')) {
             return;
         }
-        if (number === '0' && parseFloat(this.currentOperand) == 0 && !this.currentOperand.includes('.') ) {
+        if (number === '0' && parseFloat(this.currentOperand) == 0 && !this.currentOperand.includes('.')) {
             return;
         }
         if (parseFloat(this.currentOperand) != 0 || this.currentOperand.includes('.') || number == '.') {
             this.currentOperand = this.currentOperand.toString() + number.toString();
         }
         else {
-            this.currentOperand = number.toString();    
+            console.log(number);
+            this.currentOperand = number.toString();
         }
     }
     chooseOperation(operation) {
@@ -73,7 +71,7 @@ class Calculator {
             return;
         }
         if (isNaN(current)) {
-            current = prev; 
+            current = prev;
             this.readyToInput = true;
         }
         switch (this.operation) {
@@ -96,15 +94,11 @@ class Calculator {
         this.currentOperand = computation;
         this.operation = undefined;
         this.previousOperand = '';
-        console.log('currentOperand = '+this.currentOperand);
-        console.log('previousOperand = '+this.previousOperand);
 
     }
     updateDisplay() {
-        console.log('currentOperand = '+this.currentOperand);
-        console.log('previousOperand = '+this.previousOperand);
         this.currentOperandTextElement.innerText = this.currentOperand;
-        this.previousOperandTextElement.innerText = this.previousOperand + 
+        this.previousOperandTextElement.innerText = this.previousOperand +
             (this.operation == undefined ? '' : this.operation);
     }
 }
@@ -148,9 +142,7 @@ deleteButton.addEventListener('click', button => {
     calculator.updateDisplay();
 
 })
-document.addEventListener('keydown',  event =>  {
+document.addEventListener('keydown', event => {
     calculator.checkKey(event.key);
-    //calculator.appendNumber(event.key);
-    //calculator.updateDisplay();
 
 })
